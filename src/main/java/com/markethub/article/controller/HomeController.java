@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class HomeController {
@@ -57,5 +59,12 @@ public class HomeController {
         Account account = customUserDetail.getAccount();
         String token=jwtTokenProvider.generateToken(customUserDetail);
         return ResponseEntity.status(HttpStatus.OK).body(account);
+    }
+
+    @GetMapping("/accounts")
+    public ResponseEntity<List<Account>> getAccounts(){
+        List<Account> accounts = new ArrayList<>();
+        accounts = accountService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
 }
